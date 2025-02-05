@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قرآن کریم</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <style>
+        @font-face {
+            font-family: 'Uthmani';
+            src: url('https://cdn.jsdelivr.net/gh/quran/quran.com-images@master/font/UthmanicHafs1Ver09.otf') format('opentype');
+        }
+        .arabic-text {
+            font-family: 'Uthmani', serif;
+            font-size: 24px;
+            line-height: 2;
+        }
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Vazir', Tahoma, Arial;
+        }
+        .main-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .surah-card {
+            transition: transform 0.2s;
+            margin-bottom: 1rem;
+        }
+        .surah-card:hover {
+            transform: translateY(-5px);
+        }
+        .nav-link {
+            color: #1a5d1a;
+            position: relative;
+            margin: 0 0.5rem;
+            padding: 0.8rem 1.2rem;
+            border-radius: 8px;
+            transition: all 0.4s ease;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #fff;
+            background: linear-gradient(135deg, #1a5d1a 0%, #439543 100%);
+            transform: translateY(-2px);
+        }
+        .nav-link i {
+            margin-left: 0.5rem;
+            font-size: 1.1rem;
+        }
+        .navbar {
+            background: linear-gradient(135deg, #f8fff8 0%, #ffffff 100%);
+            box-shadow: 0 4px 20px rgba(26, 93, 26, 0.1);
+            padding: 1rem 0;
+            border-bottom: 4px solid #1a5d1a;
+        }
+        .navbar-brand {
+            font-size: 2rem;
+            color: #1a5d1a !important;
+            text-shadow: 2px 2px 4px rgba(26, 93, 26, 0.2);
+            padding: 0.8rem 1.5rem;
+            border-radius: 15px;
+            background: rgba(26, 93, 26, 0.08);
+            transition: all 0.4s ease;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        .navbar-brand:hover {
+            background: rgba(26, 93, 26, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(26, 93, 26, 0.2);
+        }
+        .search-box {
+            background: rgba(26, 93, 26, 0.08);
+            border: 2px solid #1a5d1a;
+            border-radius: 25px;
+            padding: 0.8rem 1.8rem;
+            transition: all 0.4s ease;
+            min-width: 320px;
+            color: #1a5d1a;
+            font-size: 0.95rem;
+        }
+        .search-box::placeholder {
+            color: rgba(26, 93, 26, 0.6);
+        }
+        .search-box:focus {
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(26, 93, 26, 0.15);
+            border-color: #1a5d1a;
+            transform: translateY(-2px);
+        }
+        .search-btn {
+            border-radius: 25px;
+            padding: 0.8rem 2rem;
+            margin-right: 0.8rem;
+            background: linear-gradient(135deg, #1a5d1a 0%, #439543 100%);
+            border: none;
+            transition: all 0.4s ease;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+        .search-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(26, 93, 26, 0.3);
+            background: linear-gradient(135deg, #439543 0%, #1a5d1a 100%);
+        }
+        .navbar-toggler {
+            border: 2px solid #1a5d1a;
+            padding: 0.6rem;
+            border-radius: 8px;
+        }
+        .navbar-toggler:focus {
+            box-shadow: 0 0 0 4px rgba(26, 93, 26, 0.15);
+        }
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(26, 93, 26, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+        @media (max-width: 992px) {
+            .search-box {
+                min-width: auto;
+                margin-top: 1rem;
+            }
+            .nav-link {
+                margin: 0.5rem 0;
+                text-align: center;
+            }
+            .navbar-brand {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <span class="arabic-text">القرآن الكريم</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'index' %}active{% endif %}" href="/">
+                            <i class="bi bi-house-heart-fill"></i> صفحه اصلی
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'show_bookmarks' %}active{% endif %}" href="/bookmarks">
+                            <i class="bi bi-bookmark-heart-fill"></i> نشانک‌ها
+                        </a>
+                    </li>
+                </ul>
+                <form class="d-flex" action="/search">
+                    <input class="form-control search-box" type="search" name="q" value="{{ request.args.get('q', '') }}" 
+                           placeholder="نام فارسی سوره را وارد کنید... (مثال: حمد)">
+                    <button class="btn btn-success search-btn" type="submit">
+                        <i class="bi bi-search-heart"></i> جستجو
+                    </button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container main-container">
+        <header class="text-center mb-5">
+            <h1 class="arabic-text">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</h1>
+        </header>
+        
+        <div class="row">
+            {% for surah in surahs %}
+            <div class="col-md-4 col-lg-3">
+                <div class="card surah-card">
+                    <div class="card-body">
+                        <h5 class="card-title d-flex justify-content-between align-items-center">
+                            <span class="arabic-text">{{ surah.name_arabic }}</span>
+                            <span class="badge bg-success">{{ surah.number }}</span>
+                        </h5>
+                        <p class="card-text">{{ surah.name_persian }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">{{ surah.verses_count }} آیه</small>
+                            <small class="text-muted">{{ surah.revelation_type }}</small>
+                        </div>
+                        <a href="{{ url_for('show_surah', surah_number=surah.number) }}" class="btn btn-outline-success mt-2 w-100">
+                            مشاهده سوره
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <footer class="bg-light py-4 mt-5">
+        <div class="container text-center">
+            <p class="mb-0">تمامی حقوق محفوظ است &copy; ۱۴۰۲</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
