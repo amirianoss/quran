@@ -75,7 +75,18 @@ def get_audio(surah_number, verse_number):
     ).first_or_404()
     return redirect(verse.audio_url)
 
+@app.route('/init-db')
+def init_database():
+    try:
+        with app.app_context():
+            db.create_all()
+            # اگر جدول سوره‌ها خالی است، آن را پر کنید
+            if not Surah.query.first():
+                from init_db import initialize_database
+                initialize_database(app)
+        return jsonify({"message": "Database initialized successfully"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
     app.run(debug=True)
