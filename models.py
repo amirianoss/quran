@@ -11,6 +11,7 @@ class Surah(db.Model):
     revelation_type = db.Column(db.String(20))  # مکی یا مدنی
     verses_count = db.Column(db.Integer)
     verses = db.relationship('Verse', backref='surah', lazy=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
 class Verse(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -23,6 +24,7 @@ class Verse(db.Model):
     hizb = db.Column(db.Integer)
     surah_id = db.Column(db.Integer, db.ForeignKey('surah.id'), nullable=False)
     bookmarks = db.relationship('Bookmark', backref='verse', lazy=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
 class Bookmark(db.Model):
     id = db.Column(db.Integer, primary_key=True)

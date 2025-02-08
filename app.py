@@ -3,13 +3,19 @@ import os
 import json
 import requests
 from datetime import datetime
+from dotenv import load_dotenv
 from models import db, Surah, Verse, Bookmark
+
+load_dotenv()
 
 app = Flask(__name__)
 
 # تنظیمات اولیه
-app.config['SECRET_KEY'] = 'your-secret-key'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///quran.db'
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'your-secret-key')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:///quran.db')
+if app.config['SQLALCHEMY_DATABASE_URI'].startswith('postgres://'):
+    app.config['SQLALCHEMY_DATABASE_URI'] = app.config['SQLALCHEMY_DATABASE_URI'].replace('postgres://', 'postgresql://', 1)
+
 db.init_app(app)
 
 # مسیر اصلی
