@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-bs-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,36 +7,65 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     <style>
+        :root {
+            --primary-color: #1a5d1a;
+            --secondary-color: #439543;
+            --bg-color: #f8f9fa;
+            --text-color: #333;
+            --card-bg: white;
+            --shadow-color: rgba(0,0,0,0.1);
+        }
+
+        [data-bs-theme="dark"] {
+            --primary-color: #4CAF50;
+            --secondary-color: #81C784;
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --card-bg: #1e1e1e;
+            --shadow-color: rgba(255,255,255,0.1);
+        }
+
         @font-face {
             font-family: 'Uthmani';
             src: url('https://cdn.jsdelivr.net/gh/quran/quran.com-images@master/font/UthmanicHafs1Ver09.otf') format('opentype');
         }
+
         .arabic-text {
             font-family: 'Uthmani', serif;
             font-size: 24px;
             line-height: 2;
         }
+
         body {
-            background-color: #f8f9fa;
+            background-color: var(--bg-color);
             font-family: 'Vazir', Tahoma, Arial;
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
+
         .main-container {
             max-width: 1200px;
             margin: 2rem auto;
             padding: 2rem;
-            background-color: white;
+            background-color: var(--card-bg);
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-shadow: 0 0 10px var(--shadow-color);
         }
+
         .surah-card {
-            transition: transform 0.2s;
+            transition: all 0.3s ease;
             margin-bottom: 1rem;
+            background-color: var(--card-bg);
+            border: 1px solid var(--shadow-color);
         }
+
         .surah-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 5px 15px var(--shadow-color);
         }
+
         .nav-link {
-            color: #1a5d1a;
+            color: var(--primary-color);
             position: relative;
             margin: 0 0.5rem;
             padding: 0.8rem 1.2rem;
@@ -45,93 +74,147 @@
             font-size: 1rem;
             font-weight: 500;
         }
+
         .nav-link:hover, .nav-link.active {
             color: #fff;
-            background: linear-gradient(135deg, #1a5d1a 0%, #439543 100%);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             transform: translateY(-2px);
         }
-        .nav-link i {
-            margin-left: 0.5rem;
-            font-size: 1.1rem;
-        }
+
         .navbar {
-            background: linear-gradient(135deg, #f8fff8 0%, #ffffff 100%);
-            box-shadow: 0 4px 20px rgba(26, 93, 26, 0.1);
+            background-color: var(--card-bg);
+            box-shadow: 0 2px 4px var(--shadow-color);
             padding: 1rem 0;
-            border-bottom: 4px solid #1a5d1a;
         }
+
         .navbar-brand {
-            font-size: 2rem;
-            color: #1a5d1a !important;
-            text-shadow: 2px 2px 4px rgba(26, 93, 26, 0.2);
-            padding: 0.8rem 1.5rem;
-            border-radius: 15px;
-            background: rgba(26, 93, 26, 0.08);
-            transition: all 0.4s ease;
+            color: var(--primary-color) !important;
+            font-size: 1.5rem;
             font-weight: bold;
-            letter-spacing: 1px;
         }
-        .navbar-brand:hover {
-            background: rgba(26, 93, 26, 0.15);
-            transform: translateY(-3px);
-            box-shadow: 0 4px 15px rgba(26, 93, 26, 0.2);
+
+        .theme-toggle {
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            background: transparent;
+            transition: all 0.3s ease;
+            margin-right: 1rem;
         }
+
+        .theme-toggle:hover {
+            background-color: var(--primary-color);
+            color: var(--card-bg);
+        }
+
+        .theme-toggle i {
+            margin-left: 0.5rem;
+        }
+
+        .site-title {
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), var(--primary-color));
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient 3s ease infinite;
+            padding: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .site-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .bismillah {
+            margin-top: 20px;
+            font-size: 2rem;
+            color: var(--primary-color);
+            opacity: 0.9;
+        }
+
         .search-box {
-            background: rgba(26, 93, 26, 0.08);
-            border: 2px solid #1a5d1a;
-            border-radius: 25px;
-            padding: 0.8rem 1.8rem;
-            transition: all 0.4s ease;
-            min-width: 320px;
-            color: #1a5d1a;
-            font-size: 0.95rem;
+            min-width: 300px;
+            border-radius: 20px;
+            padding: 0.8rem 1.2rem;
+            border: 2px solid var(--primary-color);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            box-shadow: 0 2px 5px var(--shadow-color);
         }
-        .search-box::placeholder {
-            color: rgba(26, 93, 26, 0.6);
-        }
+
         .search-box:focus {
-            background: #fff;
-            box-shadow: 0 0 0 4px rgba(26, 93, 26, 0.15);
-            border-color: #1a5d1a;
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 4px 10px var(--shadow-color);
             transform: translateY(-2px);
         }
-        .search-btn {
-            border-radius: 25px;
-            padding: 0.8rem 2rem;
-            margin-right: 0.8rem;
-            background: linear-gradient(135deg, #1a5d1a 0%, #439543 100%);
+
+        .search-box::placeholder {
+            color: var(--text-color);
+            opacity: 0.6;
+        }
+
+        .btn-search {
+            border-radius: 20px;
+            padding: 0.8rem 1.5rem;
+            margin-right: 0.5rem;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             border: none;
-            transition: all 0.4s ease;
+            color: white;
             font-weight: 500;
-            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px var(--shadow-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
-        .search-btn:hover {
+
+        .btn-search:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(26, 93, 26, 0.3);
-            background: linear-gradient(135deg, #439543 0%, #1a5d1a 100%);
+            box-shadow: 0 4px 15px var(--shadow-color);
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
         }
-        .navbar-toggler {
-            border: 2px solid #1a5d1a;
-            padding: 0.6rem;
-            border-radius: 8px;
+
+        .btn-search i {
+            font-size: 1.1rem;
+            margin-left: 0.3rem;
         }
-        .navbar-toggler:focus {
-            box-shadow: 0 0 0 4px rgba(26, 93, 26, 0.15);
-        }
-        .navbar-toggler-icon {
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(26, 93, 26, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
-        }
+
         @media (max-width: 992px) {
             .search-box {
                 min-width: auto;
-                margin-top: 1rem;
+                margin-bottom: 1rem;
             }
-            .nav-link {
-                margin: 0.5rem 0;
-                text-align: center;
+            .btn-search {
+                width: 100%;
+                justify-content: center;
             }
-            .navbar-brand {
-                font-size: 1.6rem;
+            .search-form {
+                flex-direction: column;
+                width: 100%;
             }
         }
     </style>
@@ -148,22 +231,27 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link {% if request.endpoint == 'index' %}active{% endif %}" href="/">
-                            <i class="bi bi-house-heart-fill"></i> صفحه اصلی
+                        <a class="nav-link active" href="/">
+                            <i class="bi bi-house-fill"></i> صفحه اصلی
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.endpoint == 'show_bookmarks' %}active{% endif %}" href="/bookmarks">
-                            <i class="bi bi-bookmark-heart-fill"></i> نشانک‌ها
+                        <a class="nav-link" href="{{ url_for('bookmarks') }}">
+                            <i class="bi bi-bookmark-fill"></i> نشانک‌ها
                         </a>
                     </li>
                 </ul>
-                <form class="d-flex" action="/search">
-                    <input class="form-control search-box" type="search" name="q" value="{{ request.args.get('q', '') }}" 
-                           placeholder="نام فارسی سوره را وارد کنید... (مثال: حمد)">
-                    <button class="btn btn-success search-btn" type="submit">
-                        <i class="bi bi-search-heart"></i> جستجو
-                    </button>
+                <button class="theme-toggle" onclick="toggleTheme()">
+                    <i class="bi bi-moon-fill"></i> حالت تاریک
+                </button>
+                <form class="d-flex search-form" action="{{ url_for('search') }}" method="get">
+                    <div class="d-flex w-100">
+                        <input type="text" name="q" class="form-control search-box" placeholder="جستجو در آیات و سوره‌ها...">
+                        <button type="submit" class="btn btn-search">
+                            <i class="bi bi-search-heart-fill"></i>
+                            جستجو
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -171,7 +259,8 @@
 
     <div class="container main-container">
         <header class="text-center mb-5">
-            <h1 class="arabic-text">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</h1>
+            <h1 class="site-title">سایت قرآنی مسجد بقیه الله ارومیه</h1>
+            <h2 class="arabic-text bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</h2>
         </header>
         
         <div class="row">
@@ -199,11 +288,40 @@
     </div>
 
     <footer class="bg-light py-4 mt-5">
-        <div class="container text-center">
+        <div class="container text-center text-muted">
             <p class="mb-0">تمامی حقوق محفوظ است &copy; ۱۴۰۲</p>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const themeToggle = document.querySelector('.theme-toggle');
+            const icon = themeToggle.querySelector('i');
+            const currentTheme = html.getAttribute('data-bs-theme');
+            
+            if (currentTheme === 'light') {
+                html.setAttribute('data-bs-theme', 'dark');
+                themeToggle.innerHTML = '<i class="bi bi-sun-fill"></i> حالت روشن';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                html.setAttribute('data-bs-theme', 'light');
+                themeToggle.innerHTML = '<i class="bi bi-moon-fill"></i> حالت تاریک';
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Load saved theme preference
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            const themeToggle = document.querySelector('.theme-toggle');
+            
+            document.documentElement.setAttribute('data-bs-theme', savedTheme);
+            if (savedTheme === 'dark') {
+                themeToggle.innerHTML = '<i class="bi bi-sun-fill"></i> حالت روشن';
+            }
+        });
+    </script>
 </body>
 </html>

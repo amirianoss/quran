@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-bs-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +7,26 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     <style>
+        :root {
+            --primary-color: #1a5d1a;
+            --secondary-color: #439543;
+            --bg-color: #f8f9fa;
+            --text-color: #333;
+            --card-bg: white;
+            --shadow-color: rgba(0,0,0,0.1);
+            --border-color: #e9ecef;
+        }
+
+        [data-bs-theme="dark"] {
+            --primary-color: #4CAF50;
+            --secondary-color: #81C784;
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --card-bg: #1e1e1e;
+            --shadow-color: rgba(255,255,255,0.1);
+            --border-color: #2d2d2d;
+        }
+
         @font-face {
             font-family: 'Uthmani';
             src: url('https://cdn.jsdelivr.net/gh/quran/quran.com-images@master/font/UthmanicHafs1Ver09.otf') format('opentype');
@@ -15,23 +35,31 @@
             font-family: 'Uthmani', serif;
             font-size: 28px;
             line-height: 2.5;
+            color: var(--text-color);
         }
         body {
-            background-color: #f8f9fa;
+            background-color: var(--bg-color);
             font-family: 'Vazir', Tahoma, Arial;
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
         .main-container {
             max-width: 1000px;
             margin: 2rem auto;
             padding: 2rem;
-            background-color: white;
+            background-color: var(--card-bg);
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-shadow: 0 0 10px var(--shadow-color);
         }
         .verse-container {
             padding: 1.5rem;
-            border-bottom: 1px solid #e9ecef;
+            border-bottom: 1px solid var(--border-color);
             position: relative;
+            background-color: var(--card-bg);
+            transition: background-color 0.3s ease;
+        }
+        .verse-container:hover {
+            background-color: var(--bg-color);
         }
         .verse-number {
             position: absolute;
@@ -40,7 +68,7 @@
             transform: translateY(-50%);
             width: 30px;
             height: 30px;
-            background-color: #198754;
+            background-color: var(--primary-color);
             color: white;
             border-radius: 50%;
             display: flex;
@@ -49,23 +77,24 @@
             font-size: 14px;
         }
         .verse-translation {
-            color: #666;
             margin-top: 1rem;
+            font-size: 16px;
             line-height: 1.8;
+            color: var(--text-color);
+            opacity: 0.9;
         }
-        .verse-actions {
-            opacity: 0;
-            transition: opacity 0.3s;
+        .navbar {
+            background-color: var(--card-bg);
+            box-shadow: 0 2px 4px var(--shadow-color);
+            padding: 1rem 0;
         }
-        .verse-container:hover .verse-actions {
-            opacity: 1;
-        }
-        .audio-player {
-            width: 100%;
-            margin-top: 1rem;
+        .navbar-brand {
+            color: var(--primary-color) !important;
+            font-size: 1.5rem;
+            font-weight: bold;
         }
         .nav-link {
-            color: #1a5d1a;
+            color: var(--primary-color);
             position: relative;
             margin: 0 0.5rem;
             padding: 0.8rem 1.2rem;
@@ -76,92 +105,58 @@
         }
         .nav-link:hover, .nav-link.active {
             color: #fff;
-            background: linear-gradient(135deg, #1a5d1a 0%, #439543 100%);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             transform: translateY(-2px);
         }
-        .nav-link i {
+        .btn-action {
+            color: var(--primary-color);
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            border-radius: 20px;
+            padding: 0.3rem 1rem;
+            margin: 0 0.2rem;
+            transition: all 0.3s ease;
+        }
+        .btn-action:hover {
+            background-color: var(--primary-color);
+            color: var(--card-bg);
+        }
+        .theme-toggle {
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            background: transparent;
+            transition: all 0.3s ease;
+            margin-right: 1rem;
+        }
+        .theme-toggle:hover {
+            background-color: var(--primary-color);
+            color: var(--card-bg);
+        }
+        .theme-toggle i {
             margin-left: 0.5rem;
-            font-size: 1.1rem;
         }
-        .navbar {
-            background: linear-gradient(135deg, #f8fff8 0%, #ffffff 100%);
-            box-shadow: 0 4px 20px rgba(26, 93, 26, 0.1);
-            padding: 1rem 0;
-            border-bottom: 4px solid #1a5d1a;
+        .modal-content {
+            background-color: var(--card-bg);
+            color: var(--text-color);
         }
-        .navbar-brand {
-            font-size: 2rem;
-            color: #1a5d1a !important;
-            text-shadow: 2px 2px 4px rgba(26, 93, 26, 0.2);
-            padding: 0.8rem 1.5rem;
-            border-radius: 15px;
-            background: rgba(26, 93, 26, 0.08);
-            transition: all 0.4s ease;
-            font-weight: bold;
-            letter-spacing: 1px;
+        .modal-header {
+            border-bottom-color: var(--border-color);
         }
-        .navbar-brand:hover {
-            background: rgba(26, 93, 26, 0.15);
-            transform: translateY(-3px);
-            box-shadow: 0 4px 15px rgba(26, 93, 26, 0.2);
+        .modal-footer {
+            border-top-color: var(--border-color);
         }
-        .search-box {
-            background: rgba(26, 93, 26, 0.08);
-            border: 2px solid #1a5d1a;
-            border-radius: 25px;
-            padding: 0.8rem 1.8rem;
-            transition: all 0.4s ease;
-            min-width: 320px;
-            color: #1a5d1a;
-            font-size: 0.95rem;
+        .form-control {
+            background-color: var(--bg-color);
+            border-color: var(--border-color);
+            color: var(--text-color);
         }
-        .search-box::placeholder {
-            color: rgba(26, 93, 26, 0.6);
-        }
-        .search-box:focus {
-            background: #fff;
-            box-shadow: 0 0 0 4px rgba(26, 93, 26, 0.15);
-            border-color: #1a5d1a;
-            transform: translateY(-2px);
-        }
-        .search-btn {
-            border-radius: 25px;
-            padding: 0.8rem 2rem;
-            margin-right: 0.8rem;
-            background: linear-gradient(135deg, #1a5d1a 0%, #439543 100%);
-            border: none;
-            transition: all 0.4s ease;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-        }
-        .search-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(26, 93, 26, 0.3);
-            background: linear-gradient(135deg, #439543 0%, #1a5d1a 100%);
-        }
-        .navbar-toggler {
-            border: 2px solid #1a5d1a;
-            padding: 0.6rem;
-            border-radius: 8px;
-        }
-        .navbar-toggler:focus {
-            box-shadow: 0 0 0 4px rgba(26, 93, 26, 0.15);
-        }
-        .navbar-toggler-icon {
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(26, 93, 26, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
-        }
-        @media (max-width: 992px) {
-            .search-box {
-                min-width: auto;
-                margin-top: 1rem;
-            }
-            .nav-link {
-                margin: 0.5rem 0;
-                text-align: center;
-            }
-            .navbar-brand {
-                font-size: 1.6rem;
-            }
+        .form-control:focus {
+            background-color: var(--bg-color);
+            border-color: var(--primary-color);
+            color: var(--text-color);
         }
     </style>
 </head>
@@ -177,22 +172,19 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link {% if request.endpoint == 'index' %}active{% endif %}" href="/">
-                            <i class="bi bi-house-heart-fill"></i> صفحه اصلی
+                        <a class="nav-link" href="/">
+                            <i class="bi bi-house-fill"></i> صفحه اصلی
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.endpoint == 'show_bookmarks' %}active{% endif %}" href="/bookmarks">
-                            <i class="bi bi-bookmark-heart-fill"></i> نشانک‌ها
+                        <a class="nav-link" href="{{ url_for('bookmarks') }}">
+                            <i class="bi bi-bookmark-fill"></i> نشانک‌ها
                         </a>
                     </li>
                 </ul>
-                <form class="d-flex" action="/search">
-                    <input class="form-control search-box" type="search" name="q" placeholder="نام فارسی سوره را وارد کنید... (مثال: حمد)">
-                    <button class="btn btn-success search-btn" type="submit">
-                        <i class="bi bi-search-heart"></i> جستجو
-                    </button>
-                </form>
+                <button class="theme-toggle" onclick="toggleTheme()">
+                    <i class="bi bi-moon-fill"></i> حالت تاریک
+                </button>
             </div>
         </div>
     </nav>
@@ -201,44 +193,32 @@
         <header class="text-center mb-5">
             <h1 class="arabic-text">{{ surah.name_arabic }}</h1>
             <h2>{{ surah.name_persian }}</h2>
-            <div class="mt-3">
-                <span class="badge bg-success me-2">سوره {{ surah.number }}</span>
-                <span class="badge bg-secondary me-2">{{ surah.revelation_type }}</span>
-                <span class="badge bg-info">{{ surah.verses_count }} آیه</span>
-            </div>
             {% if surah.number != 9 %}
-            <div class="arabic-text mt-4">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+            <div class="bismillah arabic-text mt-4">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
             {% endif %}
         </header>
 
-        <div class="verses-container">
-            {% for verse in verses %}
-            <div class="verse-container" id="verse-{{ verse.number }}">
-                <div class="verse-number">{{ verse.number }}</div>
-                <div class="arabic-text">{{ verse.text_arabic }}</div>
-                <div class="verse-translation">{{ verse.text_persian }}</div>
-                <div class="verse-actions mt-3">
-                    <audio class="audio-player" controls>
-                        <source src="{{ url_for('get_audio', surah_number=surah.number, verse_number=verse.number) }}" type="audio/mpeg">
-                    </audio>
-                    <div class="btn-group mt-2">
-                        <button class="btn btn-sm btn-outline-success" onclick="copyVerse({{ verse.number }})">
-                            <i class="bi bi-clipboard"></i> کپی
-                        </button>
-                        <button class="btn btn-sm btn-outline-success" onclick="addBookmark({{ verse.id }})">
-                            <i class="bi bi-bookmark"></i> نشانک
-                        </button>
-                        <button class="btn btn-sm btn-outline-success" onclick="shareVerse({{ verse.number }})">
-                            <i class="bi bi-share"></i> اشتراک‌گذاری
-                        </button>
-                    </div>
-                </div>
+        {% for verse in verses %}
+        <div class="verse-container" id="verse-{{ verse.number }}">
+            <span class="verse-number">{{ verse.number }}</span>
+            <div class="arabic-text">{{ verse.text_arabic }}</div>
+            <div class="verse-translation">{{ verse.text_persian }}</div>
+            <div class="mt-3">
+                <button class="btn btn-action" onclick="copyVerse({{ verse.number }})">
+                    <i class="bi bi-clipboard"></i> کپی
+                </button>
+                <button class="btn btn-action" onclick="showBookmarkModal('{{ verse.id }}')">
+                    <i class="bi bi-bookmark-plus"></i> نشانک
+                </button>
+                <button class="btn btn-action" onclick="shareVerse({{ verse.number }})">
+                    <i class="bi bi-share"></i> اشتراک‌گذاری
+                </button>
             </div>
-            {% endfor %}
         </div>
+        {% endfor %}
     </div>
 
-    <!-- Modal for Bookmark -->
+    <!-- Bookmark Modal -->
     <div class="modal fade" id="bookmarkModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -247,14 +227,15 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
+                    <input type="hidden" id="verseId">
                     <div class="mb-3">
-                        <label class="form-label">یادداشت</label>
+                        <label for="bookmarkNote" class="form-label">یادداشت</label>
                         <textarea class="form-control" id="bookmarkNote" rows="3"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">انصراف</button>
-                    <button type="button" class="btn btn-success" onclick="saveBookmark()">ذخیره</button>
+                    <button type="button" class="btn btn-success" onclick="addBookmark()">ذخیره</button>
                 </div>
             </div>
         </div>
@@ -262,59 +243,94 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        let currentVerseId = null;
-        const bookmarkModal = new bootstrap.Modal(document.getElementById('bookmarkModal'));
-
         function copyVerse(verseNumber) {
-            const verseElement = document.querySelector(`#verse-${verseNumber}`);
-            const arabicText = verseElement.querySelector('.arabic-text').textContent;
-            const translation = verseElement.querySelector('.verse-translation').textContent;
-            const textToCopy = `${arabicText}\n${translation}\n(سوره ${surah.name_persian}، آیه ${verseNumber})`;
+            const verseContainer = document.getElementById(`verse-${verseNumber}`);
+            const arabicText = verseContainer.querySelector('.arabic-text').textContent;
+            const translation = verseContainer.querySelector('.verse-translation').textContent;
+            const textToCopy = `${arabicText}\n${translation}`;
             
             navigator.clipboard.writeText(textToCopy).then(() => {
                 alert('آیه کپی شد');
             });
         }
 
-        function addBookmark(verseId) {
-            currentVerseId = verseId;
-            bookmarkModal.show();
+        function showBookmarkModal(verseId) {
+            document.getElementById('verseId').value = verseId;
+            new bootstrap.Modal(document.getElementById('bookmarkModal')).show();
         }
 
-        function saveBookmark() {
+        function addBookmark() {
+            const verseId = document.getElementById('verseId').value;
             const note = document.getElementById('bookmarkNote').value;
-            fetch(`/bookmark/${currentVerseId}`, {
+            
+            fetch('/add_bookmark', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ note: note })
+                body: JSON.stringify({
+                    verse_id: verseId,
+                    note: note
+                }),
             })
             .then(response => response.json())
             .then(data => {
-                if (data.status === 'success') {
-                    bookmarkModal.hide();
-                    alert('نشانک با موفقیت ذخیره شد');
+                if (data.success) {
+                    alert('نشانک با موفقیت اضافه شد');
+                    bootstrap.Modal.getInstance(document.getElementById('bookmarkModal')).hide();
+                } else {
+                    alert('خطا در افزودن نشانک');
                 }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('خطا در افزودن نشانک');
             });
         }
 
         function shareVerse(verseNumber) {
-            const verseElement = document.querySelector(`#verse-${verseNumber}`);
-            const arabicText = verseElement.querySelector('.arabic-text').textContent;
-            const translation = verseElement.querySelector('.verse-translation').textContent;
-            const shareText = `${arabicText}\n${translation}\n(سوره ${surah.name_persian}، آیه ${verseNumber})`;
+            const verseContainer = document.getElementById(`verse-${verseNumber}`);
+            const arabicText = verseContainer.querySelector('.arabic-text').textContent;
+            const translation = verseContainer.querySelector('.verse-translation').textContent;
+            const shareText = `${arabicText}\n${translation}\n\nسوره ${document.querySelector('h2').textContent} - آیه ${verseNumber}`;
             
             if (navigator.share) {
                 navigator.share({
-                    title: `آیه ${verseNumber} از سوره ${surah.name_persian}`,
-                    text: shareText,
-                    url: window.location.href + `#verse-${verseNumber}`
+                    text: shareText
                 });
             } else {
-                alert('مرورگر شما از قابلیت اشتراک‌گذاری پشتیبانی نمی‌کند');
+                navigator.clipboard.writeText(shareText).then(() => {
+                    alert('متن آیه کپی شد');
+                });
             }
         }
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const themeToggle = document.querySelector('.theme-toggle');
+            const currentTheme = html.getAttribute('data-bs-theme');
+            
+            if (currentTheme === 'light') {
+                html.setAttribute('data-bs-theme', 'dark');
+                themeToggle.innerHTML = '<i class="bi bi-sun-fill"></i> حالت روشن';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                html.setAttribute('data-bs-theme', 'light');
+                themeToggle.innerHTML = '<i class="bi bi-moon-fill"></i> حالت تاریک';
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Load saved theme preference
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            const themeToggle = document.querySelector('.theme-toggle');
+            
+            document.documentElement.setAttribute('data-bs-theme', savedTheme);
+            if (savedTheme === 'dark') {
+                themeToggle.innerHTML = '<i class="bi bi-sun-fill"></i> حالت روشن';
+            }
+        });
     </script>
 </body>
 </html>
